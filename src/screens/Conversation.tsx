@@ -32,10 +32,8 @@ import { TIME_LIMIT } from "@/config";
 import { niceScoreAtom } from "@/store/game";
 import { naughtyScoreAtom } from "@/store/game";
 import { apiTokenAtom } from "@/store/tokens";
-import { quantum } from 'ldrs';
+import { Loader } from "@/components/Loader";
 import { cn } from "@/lib/utils";
-
-quantum.register();
 
 const timeToGoPhrases = [
   "I'll need to dash off soon—let's make these last moments count.",
@@ -167,11 +165,7 @@ export const Conversation: React.FC = () => {
           </>
         ) : (
           <div className="flex h-full items-center justify-center">
-            <l-quantum
-              size="45"
-              speed="1.75"
-              color="white"
-            ></l-quantum>
+            <Loader size="45" speed="1.75" color="white" />
           </div>
         )}
         {localSessionId && (
@@ -179,7 +173,7 @@ export const Conversation: React.FC = () => {
             id={localSessionId}
             tileClassName="!object-cover"
             className={cn(
-              "absolute bottom-20 right-4 aspect-video h-40 w-24 overflow-hidden rounded-lg border-2 border-[#22C5FE] shadow-[0_0_20px_rgba(34,197,254,0.3)] sm:bottom-12 lg:h-auto lg:w-52"
+              "absolute bottom-20 right-4 aspect-video h-40 w-24 overflow-hidden rounded-lg border-2 border-[#22C5FE] shadow-[0_0_20px_rgba(34,197,254,0.3)] sm:bottom-12 lg:h-auto lg:w-52",
             )}
           />
         )}
@@ -210,7 +204,7 @@ export const Conversation: React.FC = () => {
           </Button>
           <Button
             size="icon"
-            className="bg-[rgba(251,36,71,0.80)] backdrop-blur hover:bg-[rgba(251,36,71,0.60)] border border-[rgba(251,36,71,0.9)] shadow-[0_0_20px_rgba(251,36,71,0.3)]"
+            className="border border-[rgba(251,36,71,0.9)] bg-[rgba(251,36,71,0.80)] shadow-[0_0_20px_rgba(251,36,71,0.3)] backdrop-blur hover:bg-[rgba(251,36,71,0.60)]"
             variant="secondary"
             onClick={leaveConversation}
           >

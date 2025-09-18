@@ -7,32 +7,24 @@ import {
 import { screenAtom } from "@/store/screens";
 import { conversationAtom } from "@/store/conversation";
 import React, { useCallback, useMemo, useState } from "react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { AlertTriangle, Mic, Video } from "lucide-react";
 import { useDaily, useDailyEvent, useDevices } from "@daily-co/daily-react";
 import { ConversationError } from "./ConversationError";
 import zoomSound from "@/assets/sounds/zoom.mp3";
 import { Button } from "@/components/ui/button";
-import { apiTokenAtom } from "@/store/tokens";
-import { quantum } from 'ldrs';
+import { Loader } from "@/components/Loader";
 import gloriaVideo from "@/assets/video/gloria.mp4";
-
-// Register the quantum loader
-quantum.register();
 
 const useCreateConversationMutation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [, setScreenState] = useAtom(screenAtom);
   const [, setConversation] = useAtom(conversationAtom);
-  const token = useAtomValue(apiTokenAtom);
 
   const createConversationRequest = async () => {
     try {
-      if (!token) {
-        throw new Error("Token is required");
-      }
-      const conversation = await createConversation(token);
+      const conversation = await createConversation();
       setConversation(conversation);
       setScreenState({ currentScreen: "conversation" });
     } catch (error) {
@@ -75,15 +67,15 @@ export const Instructions: React.FC = () => {
     try {
       setIsLoading(true);
       setIsPlayingSound(true);
-      
+
       audio.currentTime = 0;
       await audio.play();
-      
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       setIsPlayingSound(false);
       setIsLoadingConversation(true);
-      
+
       let micDeviceId = currentMic?.device?.deviceId;
       if (!micDeviceId) {
         const res = await daily?.startCamera({
@@ -135,11 +127,7 @@ export const Instructions: React.FC = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" />
         <AnimatedTextBlockWrapper>
           <div className="flex flex-col items-center justify-center gap-4">
-            <l-quantum
-              size="45"
-              speed="1.75"
-              color="white"
-            ></l-quantum>
+            <Loader size="45" speed="1.75" color="white" />
           </div>
         </AnimatedTextBlockWrapper>
       </DialogWrapper>
@@ -162,34 +150,41 @@ export const Instructions: React.FC = () => {
       />
       <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" />
       <AnimatedTextBlockWrapper>
-        <h1 
-          className="mb-4 pt-1 text-center text-3xl sm:text-4xl lg:text-5xl font-semibold"
+        <h1
+          className="mb-4 pt-1 text-center text-3xl font-semibold sm:text-4xl lg:text-5xl"
           style={{
-            fontFamily: 'Source Code Pro, monospace'
+            fontFamily: "Source Code Pro, monospace",
           }}
         >
           <span className="text-white">See AI?</span>{" "}
-          <span style={{
-            color: '#9EEAFF'
-          }}>Act Natural.</span>
+          <span
+            style={{
+              color: "#9EEAFF",
+            }}
+          >
+            Act Natural.
+          </span>
         </h1>
-        <p className="max-w-[650px] text-center text-base sm:text-lg text-gray-400 mb-12">
-          Have a face-to-face conversation with an AI so real, it feels human—an intelligent agent ready to listen, respond, and act across countless use cases.
+        <p className="mb-12 max-w-[650px] text-center text-base text-gray-400 sm:text-lg">
+          Have a face-to-face conversation with an AI so real, it feels human—an
+          intelligent agent ready to listen, respond, and act across countless
+          use cases.
         </p>
         <Button
           onClick={handleClick}
-          className="relative z-20 flex items-center justify-center gap-2 rounded-3xl border border-[rgba(255,255,255,0.3)] px-8 py-2 text-sm text-white transition-all duration-200 hover:text-primary mb-12 disabled:opacity-50"
+          className="relative z-20 mb-12 flex items-center justify-center gap-2 rounded-3xl border border-[rgba(255,255,255,0.3)] px-8 py-2 text-sm text-white transition-all duration-200 hover:text-primary disabled:opacity-50"
           disabled={isLoading}
           style={{
-            height: '48px',
-            transition: 'all 0.2s ease-in-out',
-            backgroundColor: 'rgba(0,0,0,0.3)',
+            height: "48px",
+            transition: "all 0.2s ease-in-out",
+            backgroundColor: "rgba(0,0,0,0.3)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 0 15px rgba(34, 197, 254, 0.5)';
+            e.currentTarget.style.boxShadow =
+              "0 0 15px rgba(34, 197, 254, 0.5)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = 'none';
+            e.currentTarget.style.boxShadow = "none";
           }}
         >
           <Video className="size-5" />
@@ -204,20 +199,26 @@ export const Instructions: React.FC = () => {
             </div>
           )}
         </Button>
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:gap-8 text-gray-400 justify-center">
-          <div className="flex items-center gap-3 bg-[rgba(0,0,0,0.2)] px-4 py-2 rounded-full">
+        <div className="mb-8 flex flex-col justify-center gap-4 text-gray-400 sm:flex-row sm:gap-8">
+          <div className="flex items-center gap-3 rounded-full bg-[rgba(0,0,0,0.2)] px-4 py-2">
             <Mic className="size-5 text-primary" />
             Mic access is required
           </div>
-          <div className="flex items-center gap-3 bg-[rgba(0,0,0,0.2)] px-4 py-2 rounded-full">
+          <div className="flex items-center gap-3 rounded-full bg-[rgba(0,0,0,0.2)] px-4 py-2">
             <Video className="size-5 text-primary" />
             Camera access is required
           </div>
         </div>
-        <span className="absolute bottom-6 px-4 text-sm text-gray-500 sm:bottom-8 sm:px-8 text-center">
-          By starting a conversation, I accept the{' '}
-          <a href="#" className="text-primary hover:underline">Terms of Use</a> and acknowledge the{' '}
-          <a href="#" className="text-primary hover:underline">Privacy Policy</a>.
+        <span className="absolute bottom-6 px-4 text-center text-sm text-gray-500 sm:bottom-8 sm:px-8">
+          By starting a conversation, I accept the{" "}
+          <a href="#" className="text-primary hover:underline">
+            Terms of Use
+          </a>{" "}
+          and acknowledge the{" "}
+          <a href="#" className="text-primary hover:underline">
+            Privacy Policy
+          </a>
+          .
         </span>
       </AnimatedTextBlockWrapper>
     </DialogWrapper>

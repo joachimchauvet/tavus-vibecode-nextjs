@@ -1,8 +1,7 @@
 import { cn } from "@/utils";
 import { motion } from "framer-motion";
-import { quantum } from 'ldrs';
-
-quantum.register();
+import { Loader } from "@/components/Loader";
+import Image from "next/image";
 
 const desktopClassName = "lg:aspect-video lg:max-h-none lg:h-auto";
 const tabletClassName = "sm:max-h-[680px]"; // sm
@@ -18,19 +17,17 @@ export const DialogWrapper = ({ children }: { children: React.ReactNode }) => {
         mobileClassName,
       )}
     >
-      <img
+      <Image
         src="/images/dialogBlur.svg"
         alt="background"
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        className="object-cover"
+        priority
       />
       {children || (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-          <l-quantum
-            size="45"
-            speed="1.75"
-            color="white"
-          ></l-quantum>
-          <p className="text-white text-lg">Loading...</p>
+          <Loader size="45" speed="1.75" color="white" />
+          <p className="text-lg text-white">Loading...</p>
         </div>
       )}
     </div>
@@ -61,10 +58,12 @@ export const AnimatedWrapper = ({
         mobileClassName,
       )}
     >
-      <img
+      <Image
         src="/images/dialogBlur.svg"
         alt="background"
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        className="object-cover"
+        priority
       />
       {children}
     </motion.div>
@@ -124,11 +123,9 @@ export const StaticTextBlockWrapper = ({
 }) => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <img
-        src={imgSrc}
-        alt="icon"
-        className="mb-4 size-20 sm:mb-8 lg:size-30"
-      />
+      <div className="relative mb-4 size-20 sm:mb-8 lg:size-30">
+        <Image src={imgSrc} alt="icon" fill className="object-contain" />
+      </div>
       <h2
         className={cn(
           "mb-4 bg-text-primary bg-clip-text pt-1 text-center text-4.5xl text-transparent sm:max-w-[650px] sm:text-6.5xl lg:text-7xl",

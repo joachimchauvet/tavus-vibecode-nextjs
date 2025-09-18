@@ -52,7 +52,7 @@
 
 @font-face {
   font-family: "Christmas and Santona";
-  src: url("/src/fonts/Christmas and Santona.ttf") format("truetype");
+  src: url("/fonts/Christmas and Santona.ttf") format("truetype");
   font-display: swap;
 }
 
@@ -75,5 +75,5 @@ main {
 
 input::placeholder {
   color: rgb(187, 187, 187) !important;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { healthCheckApi } from "@/api";
 import { screenAtom } from "@/store/screens";
 import { useAtom } from "jotai";
-import { quantum } from 'ldrs';
+import { Loader } from "@/components/Loader";
 
 const screens = {
   error: "outage",
@@ -35,8 +35,6 @@ const useHealthCheck = () => {
   return { screenState };
 };
 
-quantum.register();
-
 export const IntroLoading: React.FC = () => {
   const { screenState } = useHealthCheck();
   const [, setScreenState] = useAtom(screenAtom);
@@ -53,11 +51,7 @@ export const IntroLoading: React.FC = () => {
 
   return (
     <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-      <l-quantum
-        size="45"
-        speed="1.75"
-        color="white"
-      ></l-quantum>
+      <Loader size="45" speed="1.75" color="white" />
     </div>
   );
 };

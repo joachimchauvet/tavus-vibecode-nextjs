@@ -5,25 +5,31 @@
 The fastest way to get started vibecoding with Tavus CVI. This React quickstart template provides everything you need to create interactive video experiences powered by Tavus's Conversational Video Interface technology.
 
 > ⚠️ **Important Note**: This is a development template only. For production use, you must:
+>
 > - Never expose your Tavus API keys in the frontend
 > - Implement a secure backend service to handle API calls
 > - Use environment variables and proper key management
 > - Follow security best practices for handling sensitive credentials
 
 <br></br>
+
 ## 🛠️ Tech Stack
+
 - React
 - TypeScript
 - Vite
 - Tailwind CSS
 - Framer Motion
-<br></br>
+  <br></br>
+
 ## 🧑‍💻 Try it Live
+
 Spin up this template in under a minute with StackBlitz:
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/Tavus-Engineering/tavus-vibecode-quickstart?file=src%2FApp.tsx)
 
 <br></br>
+
 ## ⚡ Quick Start
 
 1. **Get your API credentials:**
@@ -31,6 +37,7 @@ Spin up this template in under a minute with StackBlitz:
    - Generate your API token
 
 2. **Run the template:**
+
    ```bash
    npm install
    npm run dev
@@ -47,6 +54,7 @@ Spin up this template in under a minute with StackBlitz:
    ```
 
 <br></br>
+
 ## 📚 Resources
 
 - [Tavus Documentation](https://docs.tavus.io/)

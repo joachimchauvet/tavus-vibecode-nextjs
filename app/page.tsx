@@ -1,19 +1,22 @@
+"use client";
+
 import { useAtom } from "jotai";
-import { screenAtom } from "./store/screens";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
+import { screenAtom } from "../src/store/screens";
+import { Header } from "../src/components/Header";
+import { Footer } from "../src/components/Footer";
 import {
   IntroLoading,
   Outage,
   OutOfMinutes,
   Intro,
+  UserInterview,
   Instructions,
   Conversation,
   FinalScreen,
   Settings,
-} from "./screens";
+} from "../src/screens";
 
-function App() {
+export default function Home() {
   const [{ currentScreen }] = useAtom(screenAtom);
 
   const renderScreen = () => {
@@ -26,6 +29,8 @@ function App() {
         return <OutOfMinutes />;
       case "intro":
         return <Intro />;
+      case "userInterview":
+        return <UserInterview />;
       case "settings":
         return <Settings />;
       case "instructions":
@@ -47,5 +52,3 @@ function App() {
     </main>
   );
 }
-
-export default App;

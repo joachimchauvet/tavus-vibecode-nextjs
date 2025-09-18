@@ -2,45 +2,43 @@ import { IConversation } from "@/types";
 import { settingsAtom } from "@/store/settings";
 import { getDefaultStore } from "jotai";
 
-export const createConversation = async (
-  token: string,
-): Promise<IConversation> => {
+export const createConversation = async (): Promise<IConversation> => {
   // Get settings from Jotai store
   const settings = getDefaultStore().get(settingsAtom);
-  
+
   // Add debug logs
-  console.log('Creating conversation with settings:', settings);
-  console.log('Greeting value:', settings.greeting);
-  console.log('Context value:', settings.context);
-  
-  // Build the context string
-  let contextString = "";
-  if (settings.name) {
-    contextString = `You are talking with the user, ${settings.name}. Additional context: `;
-  }
-  contextString += settings.context || "";
-  
+  console.log("Creating conversation with settings:", settings);
+  console.log("Greeting value:", settings.greeting);
+  console.log("Context value:", settings.context);
+
+  // Use the context directly - it already contains the character card or default personality
+  const contextString = settings.context || "";
+
   const payload = {
-    persona_id: settings.persona || "pd43ffef",
-    custom_greeting: settings.greeting !== undefined && settings.greeting !== null 
-      ? settings.greeting 
-      : "Hey there! I'm your technical co-pilot! Let's get get started building with Tavus.",
-    conversational_context: contextString
+    replica_id: settings.persona || "pd43ffef",
+    custom_greeting:
+      settings.greeting !== undefined && settings.greeting !== null
+        ? settings.greeting
+        : "Hey there! I'm Angel, your AI companion. Let's have a great conversation!",
+    conversational_context: contextString,
   };
-  
-  console.log('Sending payload to API:', payload);
-  
-  const response = await fetch("https://tavusapi.com/v2/conversations", {
+
+  console.log("Sending payload to API:", payload);
+
+  // Now using Next.js API route instead of directly calling Tavus API
+  const response = await fetch("/api/conversations", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": token ?? "",
     },
     body: JSON.stringify(payload),
   });
 
   if (!response?.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    const errorData = await response.json();
+    throw new Error(
+      errorData.error || `HTTP error! status: ${response.status}`,
+    );
   }
 
   const data = await response.json();

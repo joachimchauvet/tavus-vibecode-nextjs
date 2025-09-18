@@ -6,6 +6,7 @@ import { cn } from "@/utils";
 import nice from "@/assets/sounds/nice.mp3";
 import naughty from "@/assets/sounds/naughty.mp3";
 import { niceScoreAtom, naughtyScoreAtom } from "@/store/game";
+import Image from "next/image";
 
 const Typewriter = ({
   text,
@@ -225,9 +226,11 @@ export const Game: React.FC = memo(() => {
       <div className="flex w-full max-w-[628px] items-center justify-center gap-3 sm:gap-4">
         <div className="relative flex items-center justify-center gap-1">
           <span className="w-8">
-            <img
+            <Image
               src="/images/smallNaughty.png"
               alt="Naughty"
+              width={32}
+              height={32}
               className="size-8"
             />
           </span>
@@ -319,7 +322,13 @@ export const Game: React.FC = memo(() => {
         <div className="relative flex items-center justify-center gap-1">
           <span className="font-medium">Nice</span>
           <span className="w-8">
-            <img src="/images/smallNice.png" alt="Nice" className="size-8" />
+            <Image
+              src="/images/smallNice.png"
+              alt="Nice"
+              width={32}
+              height={32}
+              className="size-8"
+            />
           </span>
           <div className="absolute -left-1/2 -top-20 z-20 rotate-6">
             {showNice && <Typewriter text="NICE" variant="nice" />}

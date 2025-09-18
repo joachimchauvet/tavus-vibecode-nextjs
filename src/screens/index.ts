@@ -2,6 +2,7 @@ export { IntroLoading } from "./IntroLoading";
 export { Outage } from "./Outage";
 export { OutOfMinutes } from "./OutOfMinutes";
 export { Intro } from "./Intro";
+export { UserInterview } from "./UserInterview";
 export { Instructions } from "./Instructions";
 export { ConversationLoading } from "./ConversationLoading";
 export { Conversation } from "./Conversation";

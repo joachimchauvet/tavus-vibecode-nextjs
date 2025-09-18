@@ -65,7 +65,7 @@ export default {
       },
       animation: {
         "spin-slow": "spin 3s linear infinite",
-        'fade-in': 'fade-in 0.2s ease-in-out'
+        "fade-in": "fade-in 0.2s ease-in-out",
       },
       boxShadow: {
         "wrapper-shadow":
@@ -90,10 +90,10 @@ export default {
         52: "13rem",
       },
       keyframes: {
-        'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' }
-        }
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
     },
   },
